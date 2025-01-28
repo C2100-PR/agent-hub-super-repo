@@ -1,0 +1,31 @@
+pinecone:
+  region: us-central1
+  environment: "us-central1-gcp"
+  index_name: "dr-lucy-knowledge"
+  metric: "cosine"
+  pods: 1
+  replicas: 1
+  pod_type: "p1"
+
+connections:
+  dr_lucy_endpoints:
+    - name: Dr-Lucy-01
+      id: "6296186210691842048"
+      index_namespace: "primary"
+      
+    - name: Dr-Lucy-02
+      id: "6301815710226055168"
+      index_namespace: "secondary"
+      
+    - name: Dr-Lucy-03
+      id: "3426267348149993472"
+      index_namespace: "tertiary"
+
+  service_account: drlucyatuomation@api-for-warp-drive.iam.gserviceaccount.com
+  
+permissions:
+  read_vectors: true
+  write_vectors: true
+  delete_vectors: true
+  read_index: true
+  scale_index: true
