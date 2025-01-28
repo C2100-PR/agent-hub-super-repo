@@ -1,0 +1,34 @@
+pinecone_workload:
+  index_name: "dr-lucy-knowledge"
+  environment: "us-central1-gcp"
+  pod_type: "p1"
+  pods: 1
+  metadata_config:
+    indexed_fields: ["source", "type", "timestamp"]
+  
+  memory_workload:
+    dimension: 1536  # For text embeddings
+    metric: "cosine"
+    pods_memory: "96GiB"  # Matching Dr. Lucy's memory allocation
+    max_batch_size: 256
+
+  namespaces:
+    - name: "primary"
+      description: "Dr-Lucy-01 primary workspace"
+      pod_memory: "32GiB"
+    - name: "secondary"
+      description: "Dr-Lucy-02 workspace"
+      pod_memory: "32GiB"
+    - name: "tertiary"
+      description: "Dr-Lucy-03 workspace"
+      pod_memory: "32GiB"
+
+  scaling:
+    min_replicas: 1
+    max_replicas: 3
+    target_qps: 100
+
+  monitoring:
+    latency_threshold_ms: 50
+    error_rate_threshold: 0.001
+    memory_utilization_threshold: 0.85
