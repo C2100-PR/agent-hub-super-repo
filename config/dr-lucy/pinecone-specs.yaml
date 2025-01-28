@@ -1,0 +1,48 @@
+pinecone_index:
+  name: "multilingual-e5-large"
+  host: "multilingual-e5-large-jgzrexs.svc.gcp-us-central1-4a9f.pinecone.io"
+  specifications:
+    metric: "cosine"
+    dimensions: 1024
+    cloud: "GCP"
+    region: "us-central1"
+    capacity_mode: "Serverless"
+    current_record_count: 0
+
+environment:
+  project: "api-for-warp-drive"
+  service_account: "drlucyatuomation@api-for-warp-drive.iam.gserviceaccount.com"
+
+dr_lucy_namespaces:
+  - name: "primary"
+    endpoint_id: "6296186210691842048"  # Dr-Lucy-01
+    vector_dimension: 1024
+    metadata_schema:
+      - name: "source"
+        type: "string"
+      - name: "type"
+        type: "string"
+      - name: "timestamp"
+        type: "string"
+
+  - name: "secondary"
+    endpoint_id: "6301815710226055168"  # Dr-Lucy-02
+    vector_dimension: 1024
+    metadata_schema:
+      - name: "source"
+        type: "string"
+      - name: "type"
+        type: "string"
+      - name: "timestamp"
+        type: "string"
+
+  - name: "tertiary"
+    endpoint_id: "3426267348149993472"  # Dr-Lucy-03
+    vector_dimension: 1024
+    metadata_schema:
+      - name: "source"
+        type: "string"
+      - name: "type"
+        type: "string"
+      - name: "timestamp"
+        type: "string"
