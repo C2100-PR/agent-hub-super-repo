@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gke-pinecone-integration
+data:
+  gke_cluster:
+    name: "private-cluster-auto"
+    region: "us-west1"
+    network_policy:
+      enabled: true
+      egress_rules:
+        - to:
+            - ipBlock:
+                cidr: "34.111.0.0/16"  # Pinecone us-central1 CIDR
+          ports:
+            - protocol: TCP
+              port: 443
+
+  pinecone:
+    endpoint: "dr-lucy-knowledge-${INDEX_ID}.svc.us-central1-gcp.pinecone.io"
+    region: "us-central1"
+    vpc_peering:
+      enabled: true
+      network: "vpc-dr-lucy"
+      subnet: "subnet-pinecone"
+
+  service_mesh:
+    istio_rules:
+      - host: "*.pinecone.io"
+        tls: true
+        timeout: "30s"
+        retry:
+          attempts: 3
+          timeout: "5s"
+
+  monitoring:
+    latency_threshold_ms: 100
+    error_rate_threshold: 0.01
+    vector_ops_qps: 1000
+
+  sidecars:
+    - name: pinecone-proxy
+      image: "gcr.io/api-for-warp-drive/pinecone-proxy:latest"
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "100m"
+        limits:
+          memory: "512Mi"
+          cpu: "200m"
