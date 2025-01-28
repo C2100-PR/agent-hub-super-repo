@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dr-lucy-pinecone-integration
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dr-lucy
+      component: pinecone-integration
+  template:
+    metadata:
+      labels:
+        app: dr-lucy
+        component: pinecone-integration
+    spec:
+      serviceAccountName: drlucyatuomation
+      containers:
+        - name: dr-lucy-service
+          image: gcr.io/api-for-warp-drive/dr-lucy:latest
+          env:
+            - name: PINECONE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pinecone-secrets
+                  key: api-key
+            - name: PINECONE_ENVIRONMENT
+              value: "us-central1-gcp"
+            - name: PINECONE_INDEX
+              value: "dr-lucy-knowledge"
+          resources:
+            requests:
+              memory: "96Gi"
+              cpu: "4"
+            limits:
+              memory: "96Gi"
+              cpu: "8"
+        
+        - name: pinecone-proxy
+          image: gcr.io/api-for-warp-drive/pinecone-proxy:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PINECONE_ENDPOINT
+              value: "dr-lucy-knowledge-${INDEX_ID}.svc.us-central1-gcp.pinecone.io"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "200m"
+
+      initContainers:
+        - name: init-pinecone
+          image: gcr.io/api-for-warp-drive/pinecone-init:latest
+          command: ['sh', '-c', 'until nc -z $PINECONE_ENDPOINT 443; do echo waiting for pinecone; sleep 2; done;']
