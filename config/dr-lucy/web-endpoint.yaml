@@ -1,0 +1,8 @@
+domain: drlucy.live
+endpoint_id: 6296186210691842048
+load_balancer: 34.8.193.106:443
+ssl_certificate: sc2100cool
+voice_config:
+  provider: openai
+  model: tts-1-hd
+  default_voice: shimmer
