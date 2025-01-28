@@ -2,7 +2,7 @@ apiVersion: container.gke.io/v1beta1
 kind: Cluster
 metadata:
   name: agent-hub-cluster
-  location: us-west1
+  location: us-west4-c  # Updated to match ray-instance location
 spec:
   autopilot:
     enabled: true
@@ -18,15 +18,13 @@ spec:
     resourceConfig:
       memoryPerAgent: "96Gi"
   nodePools:
-    - name: agent-pool-primary
+    - name: ray-instance-pool  # Updated to match naming convention
       config:
-        machineType: n1-standard-32
-        diskSizeGb: 100
-        diskType: pd-ssd
+        machineType: n1-standard-4  # Updated to match ray-instance
+        diskSizeGb: 10  # Updated to match ray-instance
+        diskType: pd-standard  # Updated to standard disk
         metadata:
           disable-legacy-endpoints: "true"
       management:
         autoRepair: true
         autoUpgrade: true
-      maxPodsConstraint:
-        maxPodsPerNode: 110
