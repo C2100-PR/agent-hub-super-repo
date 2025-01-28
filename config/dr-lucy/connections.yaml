@@ -1,0 +1,23 @@
+primary_agent:
+  name: Dr-Lucy-01
+  id: "6296186210691842048"
+  service_account: drlucyatuomation@api-for-warp-drive.iam.gserviceaccount.com
+  github_app: dr-lucy-automation
+  primary_roles:
+    - aiplatform.admin
+    - owner
+    - secretmanager.admin
+  region: us-west1
+
+supporting_agents:
+  - name: Dr-Lucy-02
+    id: "6301815710226055168"
+    service_account: drlucyatuomation@api-for-warp-drive.iam.gserviceaccount.com
+    region: us-west1
+    roles: inherited
+
+  - name: Dr-Lucy-03
+    id: "3426267348149993472"
+    service_account: drlucyatuomation@api-for-warp-drive.iam.gserviceaccount.com
+    region: us-west1
+    roles: inherited
