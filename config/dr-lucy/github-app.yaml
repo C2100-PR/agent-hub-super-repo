@@ -1,0 +1,32 @@
+app:
+  name: dr-lucy-automation
+  description: "Dr. Lucy Automation GitHub App"
+  url: "https://github.com/apps/dr-lucy-automation"
+  webhook_url: "https://api-for-warp-drive.uc.r.appspot.com/webhook"
+  webhook_secret: ${WEBHOOK_SECRET}
+
+permissions:
+  contents: write
+  issues: write
+  pull_requests: write
+  metadata: read
+  workflows: write
+
+service_accounts:
+  - name: dr-lucy-auto
+    email: dr-lucy-auto@api-for-warp-drive.iam.gserviceaccount.com
+    roles:
+      - aiplatform.user
+      - iam.serviceAccountTokenCreator
+      - secretmanager.secretAccessor
+
+  - name: dr-lucy-tensorboard
+    email: dr-lucy-tensorboard@api-for-warp-drive.iam.gserviceaccount.com
+    roles:
+      - aiplatform.user
+      - storage.admin
+
+  - name: lucy-service
+    email: lucy-service@api-for-warp-drive.iam.gserviceaccount.com
+    roles:
+      - run.invoker
