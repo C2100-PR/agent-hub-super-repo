@@ -1,0 +1,32 @@
+apiVersion: container.gke.io/v1beta1
+kind: Cluster
+metadata:
+  name: agent-hub-cluster
+  location: us-west1
+spec:
+  autopilot:
+    enabled: true
+  releaseChannel:
+    channel: REGULAR
+  networkConfig:
+    enableIntraNodeVisibility: true
+    datapathProvider: ADVANCED_DATAPATH
+  securityConfig:
+    enableWorkloadIdentity: true
+  vertexAiConfig:
+    enabled: true
+    resourceConfig:
+      memoryPerAgent: "96Gi"
+  nodePools:
+    - name: agent-pool-primary
+      config:
+        machineType: n1-standard-32
+        diskSizeGb: 100
+        diskType: pd-ssd
+        metadata:
+          disable-legacy-endpoints: "true"
+      management:
+        autoRepair: true
+        autoUpgrade: true
+      maxPodsConstraint:
+        maxPodsPerNode: 110
