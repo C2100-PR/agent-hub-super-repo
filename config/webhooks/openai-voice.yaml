@@ -1,0 +1,14 @@
+webhook_endpoints:
+  voice:
+    url: "https://api.openai.com/v1/audio/speech"
+    model: "tts-1-hd"
+    voice: "shimmer"
+    api_version: "2024-01-01"
+    response_format: "mp3"
+    speed: 1.0
+
+vertex_endpoint:
+  id: "6296186210691842048"
+  region: "us-west1"
+
+load_balancer: "34.8.193.106:443"
