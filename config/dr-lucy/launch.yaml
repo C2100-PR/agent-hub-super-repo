@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dr-lucy-launch-config
+data:
+  endpoints:
+    - name: Dr-Lucy-01
+      id: "6296186210691842048"
+      memory: "96Gi"
+      region: "us-west1"
+    - name: Dr-Lucy-02
+      id: "6301815710226055168"
+      memory: "96Gi"
+      region: "us-west1"
+    - name: Dr-Lucy-03
+      id: "3426267348149993472"
+      memory: "96Gi"
+      region: "us-west1"
+  service_accounts:
+    main: "drlucyatuomation@api-for-warp-drive.iam.gserviceaccount.com"
+    auto: "dr-lucy-auto@api-for-warp-drive.iam.gserviceaccount.com"
+    tensorboard: "dr-lucy-tensorboard@api-for-warp-drive.iam.gserviceaccount.com"
+    service: "lucy-service@api-for-warp-drive.iam.gserviceaccount.com"
+  network:
+    load_balancer: "34.8.193.106:443"
+    ssl_cert: "sc2100cool"
+    tier: "PREMIUM"
