@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pinecone-config
+  namespace: agent-hub
+data:
+  environment: us-west1
+  api_key_secret_ref: pinecone-api-key
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pinecone-secrets
+  namespace: agent-hub
+type: Opaque
+data:
+  # Base64 encoded placeholders - replace with actual values
+  api_key: ${PINECONE_API_KEY}
